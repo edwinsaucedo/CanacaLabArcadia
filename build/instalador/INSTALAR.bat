@@ -29,7 +29,7 @@ powershell -NoProfile -Command "$w=New-Object -ComObject WScript.Shell; foreach(
 echo OK_TODO_LISTO >> "%LOG%"
 echo.
 echo  Listo. Abriendo CanacaLabArcadia...
-start "" "%DEST%\CanacaLabArcadia.exe"
+start "" /D "%DEST%" "%DEST%\CanacaLabArcadia.exe"
 timeout /t 4 >nul
 exit /b 0
 
