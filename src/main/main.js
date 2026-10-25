@@ -14,6 +14,7 @@ const { buildCommand, GameSession } = require('./launcher');
 const { ComboWatcher, PadTracker } = require('./xinput');
 const { buildImportPlan, executeImport } = require('./importer');
 const { retroarchAppendConfig, ensureRetroArchProfiles, ensureRpcs3Input, ensureDolphinProfiles, setDolphinPlayer1, ensureLibraryFolders } = require('./configs');
+const { applyQuality, qualityTable, LEVELS: QUALITY_LEVELS, QUALITY } = require('./quality');
 const { prepareEmulator, findPs3Firmware, findXboxFiles, rpcs3FirmwareInstalled, SONY_PS3_FIRMWARE_PAGE } = require('./emusetup');
 const { fetchCovers, fetchCoverItems } = require('./covers');
 const { CloudService, loadCloud, cloudPath, destFor } = require('./cloud');
@@ -511,6 +512,11 @@ async function launchGame(gameId) {
     ensureDolphinProfiles(resolved.exe);
     setDolphinPlayer1(resolved.exe, player1);
   }
+  // Calidad de imagen (Menu > Calidad de imagen): el reescalado lo hace el emulador; aqui se le deja escrito.
+  try {
+    const q = applyQuality({ systemId: game.system, emu: resolved.emu, exe: resolved.exe, core: resolved.core, settings: s, documentsDir: opts.documentsDir, appDataDir: opts.appDataDir });
+    if (q) appLog(`Calidad ${game.system}: ${q.level} (${q.text})${q.skipped ? `; sin cambio: ${q.skipped}` : q.changed ? ` -> ${q.file}` : ''}`);
+  } catch (e) { appLog(`Calidad ${game.system}: no se pudo escribir: ${e.message}`); }
   const cmd = buildCommand({ catalog, settings: s, resolved, game, configDir });
   // El emulador podra tomar el foco al abrir su ventana (Windows lo bloquea si no se le permite).
   const user32 = loadUser32();
@@ -600,6 +606,13 @@ function registerIpc() {
   });
 
   handle('settings:update', (patch) => settings.update(patch || {}));
+  handle('quality:table', () => qualityTable(settings.get()));
+  handle('quality:set', (systemId, level) => {
+    if (!QUALITY[systemId] || !QUALITY_LEVELS.includes(level)) throw new Error('Esa calidad no existe.');
+    const s = settings.get();
+    settings.update({ calidad: { ...(s.calidad || {}), [systemId]: level } });
+    return qualityTable(settings.get());
+  });
 
   handle('library:scan', () => ({ library: rescan(), status: systemStatus() }));
 

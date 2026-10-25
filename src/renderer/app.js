@@ -1276,6 +1276,7 @@
     ['agregar', 'Agregar juegos'],
     ['nube', 'Nube (Google Drive)'],
     ['controles', 'Controles'],
+    ['calidad', 'Calidad de imagen'],
     ['streaming', 'Streaming al iPad'],
     ['biblioteca', 'Biblioteca'],
     ['preferencias', 'Preferencias'],
@@ -1291,7 +1292,7 @@
         onclick: () => { state.stack[state.stack.length - 1] = { ...v, tab: id }; render(); }
       }, label)));
     screen.append(h('section', { class: 'settings' }, tabs, pane));
-    ({ emuladores: paneEmus, agregar: paneImport, nube: paneNube, controles: paneControls, streaming: paneStreaming, biblioteca: paneLibrary, preferencias: panePrefs, salir: paneQuit })[v.tab](pane, v);
+    ({ emuladores: paneEmus, agregar: paneImport, nube: paneNube, controles: paneControls, calidad: paneQuality, streaming: paneStreaming, biblioteca: paneLibrary, preferencias: panePrefs, salir: paneQuit })[v.tab](pane, v);
     v.onAction = (a) => {
       if (a === 'lb' || a === 'rb') {
         const i = TABS.findIndex(([id]) => id === v.tab);
@@ -1507,6 +1508,46 @@
         knobR.setAttribute('cy', 225 + ax(3) * 22);
       }
     };
+  }
+
+  // ---- calidad de imagen (reescalado): la hace cada emulador; CanacaLabArcadia se la deja escrita al abrir el juego
+  function paneQuality(pane) {
+    const list = h('div', { class: 'rows quality', style: { marginTop: '1rem' } }, h('p', { class: 'sub' }, 'Cargando...'));
+    pane.append(
+      h('h2', {}, 'Calidad de imagen'),
+      h('p', { class: 'lead' }, 'Qué tan nítidos se ven los juegos 3D. El emulador vuelve a dibujar cada juego a la resolución que elijas y CanacaLabArcadia se la deja puesta antes de abrirlo. Más calidad pide más potencia a la Ally.'),
+      list,
+      h('div', { class: 'notice', style: { marginTop: '1.4rem' } },
+        h('h3', {}, 'Juegos 2D'),
+        h('p', {}, 'NES, SNES, Game Boy, GBA, DS, Genesis, PS1, Neo Geo y arcade no cambian aquí: son de píxeles y ya llenan la pantalla. Xbox 360 usa su resolución original.')));
+    const nameOf = (id) => {
+      const sys = state.catalog.systems.find((x) => x.id === id);
+      return sys ? sys.name : id;
+    };
+    const paint = (table, focusKey = null) => {
+      list.replaceChildren(...table.map((row) => {
+        const rec = row.options.find((o) => o.id === row.def);
+        const note = row.heavy
+          ? `Ya es 720p y es pesada de emular: con Alta o Máxima los juegos pueden ir lentos. Recomendado: ${rec.name}.`
+          : `Recomendado en la Ally X: ${rec.name} (${rec.text}).`;
+        return h('div', { class: 'row' },
+          h('div', { class: 'who' }, h('strong', {}, nameOf(row.id)), h('span', {}, note)),
+          h('div', { class: 'act letters' }, row.options.map((o) => h('button', {
+            class: `btn small f${row.level === o.id ? ' sel' : ''}`, 'data-key': `q:${row.id}:${o.id}`,
+            onclick: async () => {
+              try {
+                paint(await call(api.qualitySet, row.id, o.id), `q:${row.id}:${o.id}`);
+                toast(`${nameOf(row.id)}: ${o.name} (${o.text}). Se aplica al abrir el próximo juego.`);
+              } catch (e) {
+                toast(e.message, true);
+              }
+            }
+          }, h('span', {}, o.name), h('small', {}, o.text)))));
+      }));
+      const target = focusKey && list.querySelector(`[data-key="${focusKey}"]`);
+      if (target) setFocus(target, { silent: true });
+    };
+    call(api.qualityTable).then((table) => paint(table)).catch((e) => list.replaceChildren(h('p', { class: 'sub' }, e.message)));
   }
 
   function paneStreaming(pane) {

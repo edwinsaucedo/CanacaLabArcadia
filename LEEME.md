@@ -207,6 +207,22 @@ Si alguna vez cambias los botones a mano en un emulador, CanacaLabArcadia lo res
 
 **Palanca arcade:** ponla en modo Xbox / XInput (casi todas tienen un switch). Si la palanca no tiene ese modo, en RetroArch: L3 + R3 > Controles > Asignación del puerto 1, y guarda como "remapeo del núcleo" para Neo Geo y MAME.
 
+### Calidad de imagen (reescalado)
+
+El reescalado lo hace **cada emulador**: vuelve a dibujar el juego 3D a más resolución que la consola original, para que se vea nítido en la pantalla de 1080p de la Ally X. En **Menú > Calidad de imagen** eliges por consola **Original**, **Alta** o **Máxima**, y CanacaLabArcadia lo escribe en el emulador justo antes de abrir cada juego:
+
+| Consola | Original | Alta | Máxima | Se escribe en |
+|---|---|---|---|---|
+| PS2 | 1x · 480p | **3x · 1080p** | 4x · 1440p | PCSX2 `inis\PCSX2.ini` (`upscale_multiplier`) |
+| GameCube / Wii | 1x · 528p | **3x · 1080p** | 4x · 1440p | Dolphin `User\Config\GFX.ini` (`InternalResolution`) |
+| PSP | 1x · 272p | **4x · 1080p** | 6x · 1632p | PPSSPP `memstick\PSP\SYSTEM\ppsspp.ini` (`InternalResolution`) |
+| N64 | 1x · 240p | **4x · 960p** | 6x · 1440p | RetroArch `config\Mupen64Plus-Next\Mupen64Plus-Next.opt` |
+| Xbox | 1x · 480p | **2x · 960p** | 3x · 1440p | xemu `xemu.toml` (`surface_scale`) |
+| PS3 | **100% · 720p** | 150% · 1080p | 200% · 1440p | RPCS3 `config\config.yml` (`Resolution Scale`) |
+| Switch | **1x · 720p** | 1.5x · 1080p | 2x · 1440p | Eden `qt-config.ini` (`resolution_setup`) |
+
+En negritas, lo que se usa si no eliges nada. PS3 y Switch ya son 720p y emularlos es pesado: con Alta o Máxima los juegos pueden ir lentos en la Ally X. Los juegos 2D (NES, SNES, Game Boy, GBA, DS, Genesis, PS1, Neo Geo, arcade) y Xbox 360 no cambian. Si cambias la resolución a mano dentro de uno de estos emuladores, al abrir el siguiente juego CanacaLabArcadia vuelve a poner el nivel elegido en el menú.
+
 ## 6. Sin internet
 
 Menú > Preferencias > **Emuladores sin internet**. Windows te pide permiso de administrador y CanacaLabArcadia crea reglas en el Firewall para que ningún emulador de `C:\CanacaLabArcadia\emulators` se conecte (por ejemplo Eden). Si instalas un emulador nuevo, apágalo y vuelve a activarlo. También puedes usar el script `config\canacalab-arcadia-firewall.ps1` a mano.

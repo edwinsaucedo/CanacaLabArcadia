@@ -20,7 +20,7 @@ Requiere Node.js 20 o más nuevo.
 
 ```bat
 npm install
-npm test          :: 82 pruebas
+npm test          :: 90 pruebas
 npm start         :: abre la app
 npm run dist:dir  :: genera dist\win-unpacked\CanacaLabArcadia.exe
 ```

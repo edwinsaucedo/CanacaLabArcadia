@@ -39,6 +39,8 @@ contextBridge.exposeInMainWorld('arcadia', {
   coversOpenSite: (which) => call('covers:openSite', which),
   firewall: (block) => call('emu:firewall', block),
   cloudStatus: () => call('cloud:status'),
+  qualityTable: () => call('quality:table'),
+  qualitySet: (systemId, level) => call('quality:set', systemId, level),
   cloudConnect: () => call('cloud:connect'),
   cloudCancelConnect: () => call('cloud:cancelConnect'),
   cloudRemoveAccount: (remote) => call('cloud:removeAccount', remote),

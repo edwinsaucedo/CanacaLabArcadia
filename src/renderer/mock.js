@@ -4,6 +4,19 @@
   if (window.arcadia) return;
   const listeners = {};
   const emit = (ch, p) => (listeners[ch] || []).forEach((fn) => fn(p));
+  // Calidad de imagen (copia de src/main/quality.js para la vista previa).
+  const MOCK_Q = {
+    ps2: ['alta', false, ['1x · 480p', '3x · 1080p', '4x · 1440p']], gamecube: ['alta', false, ['1x · 528p', '3x · 1080p', '4x · 1440p']],
+    wii: ['alta', false, ['1x · 528p', '3x · 1080p', '4x · 1440p']], psp: ['alta', false, ['1x · 272p', '4x · 1080p', '6x · 1632p']],
+    n64: ['alta', false, ['1x · 240p', '4x · 960p', '6x · 1440p']], xbox: ['alta', false, ['1x · 480p', '2x · 960p', '3x · 1440p']],
+    ps3: ['original', true, ['100% · 720p', '150% · 1080p', '200% · 1440p']], switch: ['original', true, ['1x · 720p', '1.5x · 1080p', '2x · 1440p']]
+  };
+  const mockQuality = {};
+  const mockQualityTable = () => Object.entries(MOCK_Q).map(([id, [def, heavy, texts]]) => ({
+    id, heavy, def, level: mockQuality[id] || def,
+    options: ['original', 'alta', 'maxima'].map((l, i) => ({ id: l, name: ['Original', 'Alta', 'Máxima'][i], text: texts[i] }))
+  }));
+
   const ok = (data) => Promise.resolve({ ok: true, data });
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -223,6 +236,8 @@
     coversOpenSite: () => ok(true),
     firewall: (block) => { settings = { ...settings, emulatorsOffline: !!block }; return ok(settings); },
     async cloudStatus() { return ok(cloudSt()); },
+    async qualityTable() { return ok(mockQualityTable()); },
+    async qualitySet(id, level) { mockQuality[id] = level; return ok(mockQualityTable()); },
     async cloudConnect() {
       emit('cloud:setup', { phase: 'Descargando rclone', pct: 60 }); await wait(300);
       emit('cloud:authLink', { url: 'http://127.0.0.1:53682/auth?state=demo' }); await wait(900);

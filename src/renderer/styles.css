@@ -471,3 +471,8 @@ body.dragging #dropzone { display: grid; }
 .prep .prep-bar .bar { height: 0.55rem; }
 
 .hint-line { display: block; margin: 0; color: var(--tenue); font-size: 0.92rem; line-height: 1.5; max-width: 70ch; }
+
+/* Calidad de imagen: tres niveles por consola */
+.quality .act.letters { margin-bottom: 0; flex-wrap: nowrap; }
+.quality .act.letters .btn { display: grid; gap: 0.1rem; min-width: 7.2rem; padding: 0.45rem 0.7rem; text-align: center; justify-items: center; }
+.quality .act.letters .btn small { font-size: 0.78rem; opacity: 0.8; font-weight: 500; }

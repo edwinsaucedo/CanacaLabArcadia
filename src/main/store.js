@@ -31,6 +31,7 @@ const DEFAULT_SETTINGS = {
   homeGames: false,
   exitHoldMs: 1200,
   emulatorsOffline: false,
+  calidad: {},
   firstRunDone: false
 };
 
