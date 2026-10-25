@@ -1,0 +1,252 @@
+{
+  "_comentario": "Definición de emuladores. {rom} = ruta del juego, {core} = ruta del núcleo RetroArch, {config} = carpeta config de CanacaLabArcadia, {emudir} = carpeta del emulador. 'exe' se busca dentro de emulators/<id>/ (en cualquier subcarpeta).",
+  "emulators": {
+    "retroarch": {
+      "name": "RetroArch",
+      "desc": "Motor para consolas retro y arcade.",
+      "exe": [
+        "retroarch.exe"
+      ],
+      "args": [
+        "-f",
+        "-L",
+        "{core}",
+        "{rom}",
+        "--appendconfig={config}\\retroarch-arcadia.cfg"
+      ],
+      "coresDir": "cores",
+      "install": {
+        "type": "retroarch"
+      },
+      "homepage": "https://www.retroarch.com/?page=platforms",
+      "controls": "Automático: RetroArch reconoce el control de la Ally X sin configurar nada. Menú de RetroArch: L3 + R3."
+    },
+    "pcsx2": {
+      "name": "PCSX2",
+      "desc": "PlayStation 2.",
+      "exe": [
+        "pcsx2-qt.exe",
+        "pcsx2-qtx64-avx2.exe",
+        "pcsx2-qtx64.exe",
+        "pcsx2.exe"
+      ],
+      "args": [
+        "-batch",
+        "-nogui",
+        "-fullscreen",
+        "--",
+        "{rom}"
+      ],
+      "install": {
+        "type": "github",
+        "repo": "PCSX2/pcsx2",
+        "asset": "windows-x64-Qt\\.7z$"
+      },
+      "portableFiles": [
+        "portable.ini",
+        "portable.txt"
+      ],
+      "homepage": "https://pcsx2.net/downloads",
+      "setup": "CanacaLabArcadia lo configura sola: solo pon el BIOS de tu PS2 (.bin de 4 MB) en la carpeta BIOS de tu Google Drive o en la carpeta bios.",
+      "controls": "Automático: el control de la Ally X y uno externo manejan al jugador 1. Si ya cambiaste los botones a mano, se respetan."
+    },
+    "dolphin": {
+      "name": "Dolphin",
+      "desc": "GameCube y Wii.",
+      "exe": [
+        "Dolphin.exe"
+      ],
+      "args": [
+        "-b",
+        "-C",
+        "Dolphin.Display.Fullscreen=True",
+        "-e",
+        "{rom}"
+      ],
+      "install": {
+        "type": "html",
+        "page": "https://dolphin-emu.org/download/",
+        "pattern": "https://dl\\.dolphin-emu\\.org/releases/[^\"'\\s<>]+-x64\\.7z"
+      },
+      "portableFiles": [
+        "portable.txt"
+      ],
+      "writesControllerProfile": true,
+      "homepage": "https://dolphin-emu.org/download/",
+      "controls": "CanacaLabArcadia deja configurado el control (GameCube y Wiimote + Nunchuk) la primera vez. Puedes ajustarlo en Dolphin > Controles."
+    },
+    "ppsspp": {
+      "name": "PPSSPP",
+      "desc": "PlayStation Portable.",
+      "exe": [
+        "PPSSPPWindows64.exe",
+        "PPSSPPWindows.exe"
+      ],
+      "args": [
+        "--fullscreen",
+        "{rom}"
+      ],
+      "install": {
+        "type": "html",
+        "page": "https://www.ppsspp.org/download/",
+        "pattern": "(?:https://www\\.ppsspp\\.org)?/files/[0-9_]+/ppsspp_win\\.zip"
+      },
+      "homepage": "https://www.ppsspp.org/download/",
+      "controls": "Automático."
+    },
+    "rpcs3": {
+      "name": "RPCS3",
+      "desc": "PlayStation 3.",
+      "exe": [
+        "rpcs3.exe"
+      ],
+      "args": [
+        "--no-gui",
+        "--fullscreen",
+        "{rom}"
+      ],
+      "install": {
+        "type": "github",
+        "repo": "RPCS3/rpcs3-binaries-win",
+        "asset": "win64.*\\.7z$"
+      },
+      "homepage": "https://rpcs3.net/download",
+      "setup": "CanacaLabArcadia lo configura sola: baja el firmware oficial de Sony y lo instala la primera vez que abres un juego de PS3 (RPCS3 se abre y se cierra solo).",
+      "controls": "Automático (XInput)."
+    },
+    "shadps4": {
+      "name": "shadPS4",
+      "desc": "PlayStation 4 (experimental).",
+      "exe": [
+        "shadPS4.exe",
+        "shadps4.exe"
+      ],
+      "args": [
+        "-g",
+        "{rom}",
+        "--fullscreen",
+        "true"
+      ],
+      "install": {
+        "type": "github",
+        "repo": "shadps4-emu/shadPS4",
+        "asset": "win64.*sdl.*\\.zip$",
+        "assetFallback": "win64.*\\.zip$"
+      },
+      "homepage": "https://shadps4.net/downloads",
+      "controls": "Automático."
+    },
+    "xemu": {
+      "name": "xemu",
+      "desc": "Xbox original.",
+      "exe": [
+        "xemu.exe"
+      ],
+      "args": [
+        "-dvd_path",
+        "{rom}"
+      ],
+      "install": {
+        "type": "github",
+        "repo": "xemu-project/xemu",
+        "asset": "^xemu-win-x86_64-release\\.zip$",
+        "assetFallback": "win.*x86_64.*release\\.zip$"
+      },
+      "homepage": "https://xemu.app/docs/download/",
+      "setup": "CanacaLabArcadia lo configura sola: pon mcpx_1.0.bin y tu BIOS de Xbox (por ejemplo Complex_4627.bin) en la carpeta BIOS de tu Google Drive. El disco duro en blanco se baja solo del proyecto xemu.",
+      "controls": "Automático."
+    },
+    "xenia": {
+      "name": "Xenia Canary",
+      "desc": "Xbox 360.",
+      "exe": [
+        "xenia_canary.exe",
+        "xenia.exe"
+      ],
+      "args": [
+        "--fullscreen=true",
+        "{rom}"
+      ],
+      "install": {
+        "type": "github",
+        "repo": "xenia-canary/xenia-canary-releases",
+        "asset": "windows.*\\.zip$"
+      },
+      "portableFiles": [
+        "portable.txt"
+      ],
+      "homepage": "https://xenia.jp/download/",
+      "controls": "Automático (XInput nativo)."
+    },
+    "eden": {
+      "name": "Eden",
+      "desc": "Nintendo Switch.",
+      "exe": [
+        "eden.exe",
+        "Eden.exe"
+      ],
+      "args": [
+        "-f",
+        "-g",
+        "{rom}"
+      ],
+      "install": {
+        "type": "html",
+        "page": "https://git.eden-emu.dev/eden-emu/eden/releases",
+        "pattern": "https://stable\\.eden-emu\\.dev/v[0-9.]+/Eden-Windows-v[0-9.]+-amd64-clang-pgo\\.zip",
+        "fallbackUrl": "https://stable.eden-emu.dev/v0.2.1/Eden-Windows-v0.2.1-amd64-clang-pgo.zip"
+      },
+      "homepage": "https://eden-emu.dev",
+      "warning": "CanacaLabArcadia lo descarga solo de su sitio oficial (stable.eden-emu.dev). No uses instaladores de otras páginas: circulan copias falsas con su nombre.",
+      "setup": "Tus llaves (prod.keys) y el firmware de tu Switch se instalan solos desde la carpeta BIOS. Los updates y DLC que estén junto a tus juegos (o en tu Drive) Eden los usa solo, y el control queda configurado al abrir el juego.",
+      "controls": "Automático: el control con el que abres el juego es el jugador 1. Si lo cambias a mano en Eden, se respeta."
+    },
+    "ryujinx": {
+      "name": "Ryujinx (Ryubing)",
+      "desc": "Nintendo Switch (alternativa).",
+      "exe": [
+        "Ryujinx.exe",
+        "ryujinx.exe"
+      ],
+      "args": [
+        "--fullscreen",
+        "{rom}"
+      ],
+      "install": {
+        "type": "manual"
+      },
+      "homepage": "https://ryujinx.app",
+      "warning": "Descárgalo solo de su sitio oficial. Necesitas prod.keys y firmware de tu propia Switch.",
+      "setup": "Abre Ryujinx una vez para cargar tus llaves y firmware.",
+      "controls": "Configura una vez: Opciones > Ajustes > Entrada > Jugador 1."
+    }
+  },
+  "tools": {
+    "rclone": {
+      "name": "rclone",
+      "desc": "Conecta CanacaLabArcadia con Google Drive para descargar tus juegos.",
+      "kind": "tool",
+      "exe": [
+        "rclone.exe"
+      ],
+      "install": {
+        "type": "url",
+        "url": "https://downloads.rclone.org/rclone-current-windows-amd64.zip"
+      },
+      "homepage": "https://rclone.org/downloads/"
+    }
+  },
+  "retroarchCores": [
+    "mesen",
+    "fceumm",
+    "snes9x",
+    "mupen64plus_next",
+    "gambatte",
+    "mgba",
+    "melondsds",
+    "genesis_plus_gx",
+    "pcsx_rearmed",
+    "mame",
+    "fbneo"
+  ]
+}

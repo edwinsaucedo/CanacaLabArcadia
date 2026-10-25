@@ -1,0 +1,54 @@
+{
+  "name": "canacalab-arcadia",
+  "productName": "CanacaLabArcadia",
+  "version": "1.10.0",
+  "description": "Frontend multi-consola para ROG Ally X: todas tus consolas en una sola interfaz, navegable con control y lista para streaming.",
+  "main": "src/main/main.js",
+  "author": "Karen Vazquez",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "kiosk": "electron . --kiosk",
+    "test": "node --test \"tests/*.test.js\"",
+    "dist": "electron-builder --win portable --x64",
+    "dist:dir": "electron-builder --win dir --x64"
+  },
+  "dependencies": {
+    "7zip-bin": "^5.2.0",
+    "koffi": "^2.9.0"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "dev.canacalab.arcadia",
+    "productName": "CanacaLabArcadia",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "config/**/*",
+      "build/icon.png",
+      "build/icon.ico",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "node_modules/7zip-bin/**/*",
+      "node_modules/koffi/**/*"
+    ],
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "icon": "build/icon.ico",
+      "signAndEditExecutable": false
+    },
+    "portable": {
+      "artifactName": "CanacaLabArcadia-${version}-portable.exe"
+    },
+    "npmRebuild": false
+  }
+}

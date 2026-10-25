@@ -1,0 +1,481 @@
+{
+  "_comentario": "Catalogo de consolas. Para agregar una consola nueva copia un bloque, cambia el id y apunta a un emulador de emulators.json. 'emulators' se prueba en orden: se usa el primero que este instalado.",
+  "systems": [
+    {
+      "id": "nes",
+      "name": "Nintendo Entertainment System",
+      "short": "NES",
+      "maker": "Nintendo",
+      "year": 1985,
+      "gen": "8 bits",
+      "color": "#E4002B",
+      "ext": [
+        ".nes",
+        ".unf",
+        ".unif",
+        ".fds",
+        ".zip",
+        ".7z"
+      ],
+      "emulators": [
+        {
+          "emu": "retroarch",
+          "core": "mesen"
+        },
+        {
+          "emu": "retroarch",
+          "core": "fceumm"
+        }
+      ],
+      "thumbs": "Nintendo - Nintendo Entertainment System"
+    },
+    {
+      "id": "snes",
+      "name": "Super Nintendo",
+      "short": "SNES",
+      "maker": "Nintendo",
+      "year": 1990,
+      "gen": "16 bits",
+      "color": "#7B5CD6",
+      "ext": [
+        ".sfc",
+        ".smc",
+        ".zip",
+        ".7z"
+      ],
+      "emulators": [
+        {
+          "emu": "retroarch",
+          "core": "snes9x"
+        }
+      ],
+      "thumbs": "Nintendo - Super Nintendo Entertainment System"
+    },
+    {
+      "id": "n64",
+      "name": "Nintendo 64",
+      "short": "N64",
+      "maker": "Nintendo",
+      "year": 1996,
+      "gen": "64 bits",
+      "color": "#1FA34A",
+      "ext": [
+        ".z64",
+        ".n64",
+        ".v64",
+        ".zip",
+        ".7z"
+      ],
+      "emulators": [
+        {
+          "emu": "retroarch",
+          "core": "mupen64plus_next"
+        },
+        {
+          "emu": "retroarch",
+          "core": "parallel_n64"
+        }
+      ],
+      "thumbs": "Nintendo - Nintendo 64"
+    },
+    {
+      "id": "gb",
+      "name": "Game Boy / Game Boy Color",
+      "short": "GB / GBC",
+      "maker": "Nintendo",
+      "year": 1989,
+      "gen": "Portátil",
+      "color": "#8FB339",
+      "ext": [
+        ".gb",
+        ".gbc",
+        ".zip",
+        ".7z"
+      ],
+      "emulators": [
+        {
+          "emu": "retroarch",
+          "core": "gambatte"
+        },
+        {
+          "emu": "retroarch",
+          "core": "mgba"
+        }
+      ],
+      "thumbs": "Nintendo - Game Boy Color"
+    },
+    {
+      "id": "gba",
+      "name": "Game Boy Advance",
+      "short": "GBA",
+      "maker": "Nintendo",
+      "year": 2001,
+      "gen": "Portátil",
+      "color": "#5B3FB8",
+      "ext": [
+        ".gba",
+        ".zip",
+        ".7z"
+      ],
+      "emulators": [
+        {
+          "emu": "retroarch",
+          "core": "mgba"
+        }
+      ],
+      "thumbs": "Nintendo - Game Boy Advance"
+    },
+    {
+      "id": "nds",
+      "name": "Nintendo DS",
+      "short": "DS",
+      "maker": "Nintendo",
+      "year": 2004,
+      "gen": "Portátil",
+      "color": "#9AA3AD",
+      "ext": [
+        ".nds",
+        ".zip",
+        ".7z"
+      ],
+      "emulators": [
+        {
+          "emu": "retroarch",
+          "core": "melondsds"
+        },
+        {
+          "emu": "retroarch",
+          "core": "melonds"
+        }
+      ],
+      "thumbs": "Nintendo - Nintendo DS"
+    },
+    {
+      "id": "gamecube",
+      "name": "Nintendo GameCube",
+      "short": "GameCube",
+      "maker": "Nintendo",
+      "year": 2001,
+      "gen": "128 bits",
+      "color": "#6A4FC9",
+      "ext": [
+        ".iso",
+        ".gcm",
+        ".rvz",
+        ".gcz",
+        ".ciso",
+        ".nkit.iso"
+      ],
+      "emulators": [
+        {
+          "emu": "dolphin"
+        }
+      ],
+      "thumbs": "Nintendo - GameCube"
+    },
+    {
+      "id": "wii",
+      "name": "Nintendo Wii",
+      "short": "Wii",
+      "maker": "Nintendo",
+      "year": 2006,
+      "gen": "7.ª generación",
+      "color": "#2BB5E6",
+      "ext": [
+        ".iso",
+        ".wbfs",
+        ".rvz",
+        ".wia",
+        ".gcz",
+        ".wad"
+      ],
+      "emulators": [
+        {
+          "emu": "dolphin"
+        }
+      ],
+      "thumbs": "Nintendo - Wii"
+    },
+    {
+      "id": "switch",
+      "name": "Nintendo Switch",
+      "short": "Switch",
+      "maker": "Nintendo",
+      "year": 2017,
+      "gen": "8.ª generación",
+      "color": "#E60012",
+      "ext": [
+        ".nsp",
+        ".xci",
+        ".nca",
+        ".nro"
+      ],
+      "emulators": [
+        {
+          "emu": "eden"
+        },
+        {
+          "emu": "ryujinx"
+        }
+      ],
+      "requires": "Necesita las llaves (prod.keys) y el firmware de TU propia Switch: súbelos a la carpeta BIOS de tu Google Drive y CanacaLabArcadia los instala en Eden sola. Updates y DLC: ponlos junto al juego y se usan solos.",
+      "offline": true
+    },
+    {
+      "id": "genesis",
+      "name": "Sega Genesis / Mega Drive",
+      "short": "Genesis",
+      "maker": "Sega",
+      "year": 1988,
+      "gen": "16 bits",
+      "color": "#1D4ED8",
+      "ext": [
+        ".md",
+        ".gen",
+        ".smd",
+        ".bin",
+        ".zip",
+        ".7z"
+      ],
+      "emulators": [
+        {
+          "emu": "retroarch",
+          "core": "genesis_plus_gx"
+        },
+        {
+          "emu": "retroarch",
+          "core": "picodrive"
+        }
+      ],
+      "thumbs": "Sega - Mega Drive - Genesis"
+    },
+    {
+      "id": "ps1",
+      "name": "PlayStation",
+      "short": "PS1",
+      "maker": "Sony",
+      "year": 1994,
+      "gen": "32 bits",
+      "color": "#A1A8B3",
+      "ext": [
+        ".cue",
+        ".chd",
+        ".pbp",
+        ".m3u",
+        ".ccd"
+      ],
+      "emulators": [
+        {
+          "emu": "retroarch",
+          "core": "pcsx_rearmed"
+        },
+        {
+          "emu": "retroarch",
+          "core": "mednafen_psx_hw"
+        }
+      ],
+      "requires": "Opcional: BIOS scph5501.bin de tu consola en la carpeta bios para mejor compatibilidad.",
+      "thumbs": "Sony - PlayStation"
+    },
+    {
+      "id": "ps2",
+      "name": "PlayStation 2",
+      "short": "PS2",
+      "maker": "Sony",
+      "year": 2000,
+      "gen": "128 bits",
+      "color": "#2F5DD9",
+      "ext": [
+        ".iso",
+        ".chd",
+        ".cso",
+        ".zso",
+        ".gz",
+        ".cue"
+      ],
+      "emulators": [
+        {
+          "emu": "pcsx2"
+        }
+      ],
+      "requires": "BIOS de tu propia PS2 en la carpeta BIOS de tu Google Drive: se baja y se configura solo.",
+      "thumbs": "Sony - PlayStation 2"
+    },
+    {
+      "id": "ps3",
+      "name": "PlayStation 3",
+      "short": "PS3",
+      "maker": "Sony",
+      "year": 2006,
+      "gen": "7.ª generación",
+      "color": "#3A3F47",
+      "ext": [
+        ".iso"
+      ],
+      "folderGames": "ps3",
+      "emulators": [
+        {
+          "emu": "rpcs3"
+        }
+      ],
+      "requires": "Firmware oficial de PS3: CanacaLabArcadia lo baja de Sony y lo instala sola al abrir tu primer juego. Las ISO deben estar descifradas o ir junto con su .dkey.",
+      "thumbs": "Sony - PlayStation 3"
+    },
+    {
+      "id": "ps4",
+      "name": "PlayStation 4",
+      "short": "PS4",
+      "maker": "Sony",
+      "year": 2013,
+      "gen": "8.ª generación",
+      "color": "#0070D1",
+      "ext": [],
+      "folderGames": "ps4",
+      "emulators": [
+        {
+          "emu": "shadps4"
+        }
+      ],
+      "requires": "Juegos ya extraídos en carpeta (CUSAxxxxx con eboot.bin). Compatibilidad parcial: revisa la lista de shadPS4."
+    },
+    {
+      "id": "psp",
+      "name": "PlayStation Portable",
+      "short": "PSP",
+      "maker": "Sony",
+      "year": 2004,
+      "gen": "Portátil",
+      "color": "#4B5563",
+      "ext": [
+        ".iso",
+        ".cso",
+        ".pbp",
+        ".chd"
+      ],
+      "emulators": [
+        {
+          "emu": "ppsspp"
+        }
+      ],
+      "thumbs": "Sony - PlayStation Portable"
+    },
+    {
+      "id": "xbox",
+      "name": "Xbox",
+      "short": "Xbox",
+      "maker": "Microsoft",
+      "year": 2001,
+      "gen": "128 bits",
+      "color": "#3C8D2F",
+      "ext": [
+        ".iso",
+        ".xiso"
+      ],
+      "emulators": [
+        {
+          "emu": "xemu"
+        }
+      ],
+      "requires": "MCPX boot ROM y BIOS de tu propia Xbox en la carpeta BIOS de tu Google Drive (el disco duro se baja solo). Las ISO deben estar en formato XISO.",
+      "thumbs": "Microsoft - Xbox"
+    },
+    {
+      "id": "xbox360",
+      "name": "Xbox 360",
+      "short": "Xbox 360",
+      "maker": "Microsoft",
+      "year": 2005,
+      "gen": "7.ª generación",
+      "color": "#7CBB00",
+      "ext": [
+        ".iso",
+        ".xex",
+        ".zar"
+      ],
+      "folderGames": "xbox360",
+      "emulators": [
+        {
+          "emu": "xenia"
+        }
+      ],
+      "thumbs": "Microsoft - Xbox 360"
+    },
+    {
+      "id": "mame",
+      "name": "Arcade (MAME)",
+      "short": "MAME",
+      "maker": "Arcade",
+      "year": 1997,
+      "gen": "Arcade",
+      "color": "#F59E0B",
+      "ext": [
+        ".zip",
+        ".7z",
+        ".chd"
+      ],
+      "emulators": [
+        {
+          "emu": "retroarch",
+          "core": "mame"
+        },
+        {
+          "emu": "retroarch",
+          "core": "fbneo"
+        }
+      ],
+      "ignore": [
+        "neogeo.zip",
+        "qsound.zip",
+        "pgm.zip",
+        "cpzn1.zip",
+        "cpzn2.zip",
+        "decocass.zip",
+        "skns.zip",
+        "stvbios.zip",
+        "naomi.zip",
+        "awbios.zip"
+      ],
+      "requires": "Los romsets deben coincidir con la versión del núcleo MAME. Si un juego no abre, prueba con FBNeo en Ajustes > Emuladores.",
+      "thumbs": "MAME"
+    },
+    {
+      "id": "neogeo",
+      "name": "Neo Geo",
+      "short": "Neo Geo",
+      "maker": "SNK",
+      "year": 1990,
+      "gen": "Arcade",
+      "color": "#C9A227",
+      "ext": [
+        ".zip",
+        ".7z"
+      ],
+      "emulators": [
+        {
+          "emu": "retroarch",
+          "core": "fbneo"
+        }
+      ],
+      "ignore": [
+        "neogeo.zip"
+      ],
+      "requires": "Necesita el BIOS neogeo.zip (versión para FBNeo) en la carpeta bios o junto a tus juegos de Neo Geo.",
+      "bios": [
+        {
+          "file": "neogeo.zip",
+          "_comentario": "Archivos que FBNeo exige dentro de neogeo.zip (nombre: CRC32). Si cambias el BIOS en las opciones del núcleo, ajusta esta lista.",
+          "contains": {
+            "sp-s3.sp1": "91b64be3",
+            "sm1.sm1": "94416d67",
+            "sfix.sfix": "c2ea0cfd",
+            "000-lo.lo": "5a86cff2"
+          },
+          "copyTo": [
+            "bios/fbneo"
+          ]
+        }
+      ],
+      "thumbs": "SNK - Neo Geo"
+    }
+  ]
+}

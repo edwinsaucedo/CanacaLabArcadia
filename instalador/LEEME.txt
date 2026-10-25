@@ -1,0 +1,20 @@
+CANACALAB ARCADIA 1.10.0 para Windows (ROG Ally / PC x64)
+
+INSTALAR
+  1. Descomprime todo este .zip (clic derecho > Extraer todo).
+  2. Doble clic en INSTALAR.bat.
+     Se copia a C:\CanacaLabArcadia\app, crea el acceso directo en el Escritorio
+     y en el menu Inicio, y abre CanacaLabArcadia. Tu biblioteca queda en C:\CanacaLabArcadia.
+  Para actualizar a una version nueva: lo mismo; tus juegos, partidas y ajustes no se tocan.
+
+PRIMER USO (todo lo demas lo hace sola)
+  - "Agregar carpeta": pega el enlace de tu carpeta de ROMs de Google Drive.
+  - "Conectar Google": inicia sesion y acepta el permiso de solo lectura.
+  - Pon tus BIOS en la subcarpeta BIOS de esa carpeta de Drive: se bajan solas.
+  - Emuladores, nucleos, firmware de PS3, disco de Xbox y portadas se instalan solos.
+  - Portadas inteligentes (opcional): Menu > Portadas, con tus llaves de IGDB/ScreenScraper.
+
+Si Windows muestra "Windows protegio tu PC": "Mas informacion" > "Ejecutar de todas formas"
+(la app no esta firmada digitalmente).
+
+Codigo fuente y versiones: https://github.com/edwinsaucedo/CanacaLabArcadia

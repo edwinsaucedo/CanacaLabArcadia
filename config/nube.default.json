@@ -1,0 +1,16 @@
+{
+  "_comentario": "Carpetas de Google Drive de donde CanacaLabArcadia descarga juegos. Puedes agregar mas carpetas y mas cuentas desde Menu > Nube, o editar este archivo. 'cuenta' es el nombre de la cuenta conectada (por ejemplo google1); si se deja vacio se usa la primera cuenta conectada. En 'mapeo' indicas a que consola va cada subcarpeta: usa el id de la consola (ps2, gamecube, mame...), 'bios' para la carpeta de BIOS, o null para ignorarla.",
+  "cuentas": [],
+  "carpetas": [],
+  "mapeo": {
+    "BIOS": "bios",
+    "Arcade": "mame",
+    "MAME": "mame",
+    "Neo Geo": "neogeo",
+    "Game Boy": "gb",
+    "Game Boy Color": "gb",
+    "Game Boy Advance": "gba",
+    "PC": null
+  },
+  "descomprimir": true
+}

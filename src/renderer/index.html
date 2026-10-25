@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' arcadia-media: data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self'; connect-src 'self' arcadia-media:">
+  <title>CanacaLabArcadia</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="ambient" aria-hidden="true"></div>
+  <header id="topbar">
+    <div class="brand" aria-label="CanacaLabArcadia">CanacaLabArcadia</div>
+    <div class="status">
+      <span id="auto-state" class="auto-state" aria-live="polite"></span>
+      <span id="pad-state" class="pad-state" title="Control"></span>
+      <span id="battery" class="battery"></span>
+      <span id="clock" class="clock"></span>
+    </div>
+  </header>
+  <main id="screen" tabindex="-1"></main>
+  <footer id="hints" aria-label="Botones"></footer>
+  <div id="layer"></div>
+  <div id="toasts" aria-live="polite"></div>
+  <div id="dropzone" aria-hidden="true"><div><strong>Suelta para agregar</strong><span>CanacaLabArcadia detecta la consola de cada juego y lo acomoda en su carpeta.</span></div></div>
+  <script src="mock.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

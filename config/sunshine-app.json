@@ -1,0 +1,12 @@
+{
+  "_nota": "Ejemplo de aplicacion para Sunshine. Lo mas facil es agregarla desde el panel web (Applications > Add New) copiando 'name' y 'cmd'. Cambia la ruta si guardaste CanacaLabArcadia.exe en otro lugar.",
+  "apps": [
+    {
+      "name": "CanacaLabArcadia",
+      "cmd": "\"C:\\CanacaLabArcadia\\app\\CanacaLabArcadia.exe\" --kiosk",
+      "auto-detach": "true",
+      "wait-all": "true",
+      "exit-timeout": "5"
+    }
+  ]
+}

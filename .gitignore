@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.log
+instalacion.log
+# Llaves y datos personales: viven en C:\CanacaLabArcadia\config, nunca en el repo.
+config/portadas.json
+config/nube.json
+config/rclone.conf
