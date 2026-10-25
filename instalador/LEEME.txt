@@ -9,3 +9,13 @@ Opcion facil:
      Une las partes, descomprime e instala en C:\CanacaLabArcadia\app.
 
 Con 7-Zip: abre la parte .001 y extrae; luego abre CanacaLabArcadia\INSTALAR.bat.
+
+Primera vez en la app (una sola vez, la carpeta no viene en el instalador):
+  1. "Agregar carpeta": pega el enlace de la carpeta de Google Drive con una
+     subcarpeta por consola (no el de una subcarpeta como PS2).
+  2. "Conectar Google": entra con el Gmail dueño de la carpeta o con el que
+     te la compartieron. Si el navegador abre otra cuenta: "Usar otra cuenta".
+Si sale "La carpeta no tiene subcarpetas", esa cuenta no tiene permiso:
+  - que te compartan la carpeta en Drive (Compartir > tu Gmail como Lector);
+  - en Menu > Nube: "Desconectar" y "Conectar cuenta de Google" con el Gmail correcto;
+  - luego presiona Y en la pantalla de la nube.

@@ -7,9 +7,15 @@ INSTALAR
      y en el menu Inicio, y abre CanacaLabArcadia. Tu biblioteca queda en C:\CanacaLabArcadia.
   Para actualizar a una version nueva: lo mismo; tus juegos, partidas y ajustes no se tocan.
 
-PRIMER USO (todo lo demas lo hace sola)
-  - "Agregar carpeta": pega el enlace de tu carpeta de ROMs de Google Drive.
-  - "Conectar Google": inicia sesion y acepta el permiso de solo lectura.
+PRIMER USO (una sola vez; todo lo demas lo hace sola)
+  - "Agregar carpeta": pega el enlace de tu carpeta de ROMs de Google Drive
+    (la que tiene una subcarpeta por consola, no la de PS2 u otra consola).
+  - "Conectar Google": entra con el Gmail dueño de la carpeta o con el que te la
+    compartieron ("Usar otra cuenta" si el navegador abre otra) y acepta el
+    permiso de solo lectura.
+  - Si sale "La carpeta no tiene subcarpetas": esa cuenta no tiene permiso.
+    Que te compartan la carpeta en Drive (tu Gmail como Lector) o, en
+    Menu > Nube, "Desconectar" y conecta el Gmail correcto.
   - Pon tus BIOS en la subcarpeta BIOS de esa carpeta de Drive: se bajan solas.
   - Emuladores, nucleos, firmware de PS3, disco de Xbox y portadas se instalan solos.
   - Portadas inteligentes (opcional): Menu > Portadas, con tus llaves de IGDB/ScreenScraper.

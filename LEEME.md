@@ -120,11 +120,13 @@ Las llaves quedan en `C:\CanacaLabArcadia\config\portadas.json` (solo en tu Ally
 
 ## 4. Descargar de tu Google Drive
 
-**Tu carpeta de ROMs (una vez):** Menú > **Nube** > "Agregar carpeta" y pega el enlace de tu carpeta de Google Drive (drive.google.com/drive/folders/...). Cada subcarpeta (PS2, Nintendo Switch, Arcade, BIOS…) se asigna sola a su consola.
+**Tu carpeta de ROMs (una vez):** la carpeta **no viene en el instalador**; cada persona la agrega en su PC. En la pantalla principal toca **Agregar carpeta** (o Menú > **Nube** > "Agregar carpeta"), pon un nombre (por ejemplo ROMs) y pega el enlace de la carpeta de Google Drive que tiene una subcarpeta por consola (drive.google.com/drive/folders/...). No pegues el de una subcarpeta como PS2. Cada subcarpeta (PS2, Nintendo Switch, Arcade, BIOS…) se asigna sola a su consola. Queda guardada en `C:\CanacaLabArcadia\config\nube.json` y las actualizaciones no la borran.
+
+**Si la carpeta es de otra persona:** pídele que en Google Drive haga clic derecho en la carpeta > **Compartir** y agregue tu Gmail como **Lector**.
 
 **Tus juegos de Drive en la biblioteca:** con la cuenta conectada, cada juego de tu Drive aparece en su consola (y en la vista por Juegos) con una nubecita ☁ y su tamaño. A lo descarga **primero en la fila** y lo abre al terminar; con B sigues navegando y la descarga continúa (te avisa cuando está lista). La lista de tu Drive se actualiza cada vez que abres CanacaLabArcadia y se guarda para verla sin internet.
 
-**Conectar la cuenta (una vez):** botón **Conectar Google** en la pantalla principal (o Menú > **Nube** > "Conectar cuenta de Google"). Se abre el navegador: entra con la cuenta dueña de la carpeta y acepta el permiso de **solo lectura** (CanacaLabArcadia no puede borrar ni cambiar nada de tu Drive). La primera vez CanacaLabArcadia descarga **rclone** (la herramienta que habla con Drive, unos 20 MB).
+**Conectar la cuenta (una vez):** botón **Conectar Google** en la pantalla principal (o Menú > **Nube** > "Conectar cuenta de Google"). Se abre el navegador: entra con **el Gmail que es dueño de la carpeta o con el que te la compartieron** (si el navegador abre otra cuenta, toca **Usar otra cuenta**) y acepta el permiso de **solo lectura** (CanacaLabArcadia no puede borrar ni cambiar nada de tu Drive). La primera vez CanacaLabArcadia descarga **rclone** (la herramienta que habla con Drive, unos 20 MB).
 
 **Descargar varios juegos a la vez:** en una consola, botón **"Descargar de la nube"** (o Agregar juegos > "Descargar de Google Drive").
 
@@ -259,6 +261,7 @@ Para agregar una consola nueva copia un bloque de `systems.json`, cambia el `id`
 - **Un juego de PS3 en ISO no abre**: debe estar descifrado o ir acompañado de su `.dkey` con el mismo nombre.
 - **Un juego de MAME no abre**: el romset no coincide con la versión del núcleo. Prueba FBNeo en `systems.json` (pon `fbneo` primero) o consigue el romset de la versión correcta.
 - **La nube dice "No se pudo conectar la cuenta"**: vuelve a intentarlo y acepta el permiso en el navegador. Si el navegador no se abrió, usa el botón "Si el navegador no se abrió, ábrelo aquí".
+- **"La carpeta no tiene subcarpetas"** (y tu carpeta sí las tiene): la cuenta conectada no tiene permiso, y Google muestra la carpeta vacía en vez de dar un error. Revisa en este orden: 1) que la carpeta esté compartida con tu Gmail (Compartir > Lector); 2) que conectaste ese mismo Gmail: en myaccount.google.com > Seguridad > "Tus conexiones con apps y servicios de terceros" debe aparecer **rclone**; si no aparece, en Menú > Nube toca **Desconectar** y luego **Conectar cuenta de Google** eligiendo **Usar otra cuenta**; 3) que el enlace sea el de la carpeta principal, no el de una subcarpeta. Después presiona Y en la pantalla de la nube.
 - **La nube dice que no encuentra la carpeta**: revisa que el enlace sea de una carpeta (`/drive/folders/...`) y que la cuenta elegida tenga acceso a ella.
 - **Google dice "cuota de descarga excedida"**: Drive limita las descargas de un mismo archivo por día; espera unas horas.
 - **Neo Geo: "one of your romsets is missing files... neogeo"**: falta `neogeo.zip` o es de una versión vieja. CanacaLabArcadia ahora lo revisa antes de abrir el juego y te dice qué le falta. Necesitas un `neogeo.zip` del set de FBNeo: debe traer `sp-s3.sp1`, `sm1.sm1`, `sfix.sfix` y `000-lo.lo` (se comparan por CRC, en `config\systems.json` > neogeo > bios).

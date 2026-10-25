@@ -10,7 +10,12 @@ CanacaLabArcadia no emula nada por sí misma: abre el mejor emulador de código 
 2. Abre la carpeta **`instalador`** y da doble clic en **`INSTALAR.bat`**. Une las 3 partes del instalador (GitHub no acepta archivos de más de 100 MB), lo descomprime e instala.
 3. Se instala en `C:\CanacaLabArcadia\app`, crea los accesos directos y se abre. La biblioteca (juegos, BIOS, partidas, ajustes) vive en `C:\CanacaLabArcadia`.
 
-En el primer uso: **Agregar carpeta** (enlace de tu carpeta de ROMs en Google Drive) y **Conectar Google**. Lo demás (emuladores, núcleos, BIOS desde tu Drive, firmware de PS3, disco de Xbox, portadas) lo hace el piloto automático.
+En el primer uso (una sola vez; la carpeta no viene en el instalador):
+
+1. **Agregar carpeta**: pega el enlace de la carpeta de Google Drive que tiene una subcarpeta por consola (PS2, Nintendo Switch, BIOS…), no el de una subcarpeta. Si la carpeta es de otra persona, que te la comparta en Drive (Compartir > tu Gmail como Lector).
+2. **Conectar Google**: entra con el Gmail dueño de la carpeta o con el que te la compartieron. Si el navegador abre otra cuenta, toca **Usar otra cuenta**.
+
+Lo demás (emuladores, núcleos, BIOS desde tu Drive, firmware de PS3, disco de Xbox, portadas) lo hace el piloto automático. Si sale **"La carpeta no tiene subcarpetas"**, la cuenta conectada no tiene permiso: revisa la sección "Si algo falla" del [LEEME](LEEME.md).
 
 La guía completa está en [LEEME.md](LEEME.md).
 
