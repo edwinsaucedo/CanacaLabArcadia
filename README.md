@@ -6,8 +6,8 @@ CanacaLabArcadia no emula nada por sí misma: abre el mejor emulador de código 
 
 ## Instalar (sin Node.js)
 
-1. Baja `CanacaLabArcadia-<versión>-win-x64.zip` de [Releases](https://github.com/edwinsaucedo/CanacaLabArcadia/releases).
-2. Descomprímelo y abre **`INSTALAR.bat`**.
+1. Botón verde **Code** > **Download ZIP** y descomprímelo.
+2. Abre la carpeta **`instalador`** y da doble clic en **`INSTALAR.bat`**. Une las 3 partes del instalador (GitHub no acepta archivos de más de 100 MB), lo descomprime e instala.
 3. Se instala en `C:\CanacaLabArcadia\app`, crea los accesos directos y se abre. La biblioteca (juegos, BIOS, partidas, ajustes) vive en `C:\CanacaLabArcadia`.
 
 En el primer uso: **Agregar carpeta** (enlace de tu carpeta de ROMs en Google Drive) y **Conectar Google**. Lo demás (emuladores, núcleos, BIOS desde tu Drive, firmware de PS3, disco de Xbox, portadas) lo hace el piloto automático.
@@ -33,7 +33,8 @@ También están los atajos `0-INSTALAR-TODO.bat` (compila e instala de una vez),
 | `src/renderer` | Interfaz (`app.js`, `styles.css`); `mock.js` permite verla en un navegador sin Electron |
 | `config` | Catálogo de consolas y emuladores, mapeo de carpetas de Drive |
 | `tests` | Pruebas con `node --test` |
-| `instalador` | `INSTALAR.bat` y `LEEME.txt` que van dentro del zip de Releases |
+| `instalador` | El instalador de Windows ya compilado (en 3 partes) y `INSTALAR.bat`, que las une e instala |
+| `build/instalador` | `INSTALAR.bat` y `LEEME.txt` que van dentro del zip del instalador |
 
 ## Privacidad
 

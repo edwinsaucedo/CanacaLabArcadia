@@ -1,6 +1,8 @@
 *.bat text eol=crlf
 *.ps1 text eol=crlf
 instalador/*.txt text eol=crlf
+build/instalador/*.txt text eol=crlf
+*.zip.0* binary
 *.ico binary
 *.png binary
 *.woff2 binary

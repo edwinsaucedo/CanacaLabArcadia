@@ -1,41 +1,24 @@
 @echo off
 setlocal
-title CanacaLabArcadia - Instalar
+title CanacaLabArcadia - Instalar desde GitHub
 cd /d "%~dp0"
-set "LOG=%~dp0instalacion.log"
-set "DEST=C:\CanacaLabArcadia\app"
-echo [%date% %time%] Inicio > "%LOG%"
 echo.
-echo  CANACALAB ARCADIA 1.10.0 - Instalar
-echo  -----------------------------------
-echo  No necesita internet ni Node.js. Tarda menos de un minuto.
+echo  CANACALAB ARCADIA - Instalar desde GitHub
+echo  -----------------------------------------
+echo  Une las partes del instalador, lo descomprime e instala. No necesita Node.js.
 echo.
-if not exist "%~dp0app\CanacaLabArcadia.exe" (
-  echo NO_APP >> "%LOG%"
-  echo  No encuentro la carpeta "app". Descomprime TODO el .zip y vuelve a abrir INSTALAR.bat
-  goto :fail
-)
-echo  [1/3] Cerrando CanacaLabArcadia si estaba abierta...
-taskkill /IM CanacaLabArcadia.exe /F >> "%LOG%" 2>&1
-timeout /t 2 >nul
-echo  [2/3] Copiando a %DEST%...
-echo === copiar === >> "%LOG%"
-robocopy "%~dp0app" "%DEST%" /E /NFL /NDL /NJH /NP >> "%LOG%" 2>&1
-if errorlevel 8 goto :fail
-copy /Y "%~dp0icon.ico" "%DEST%\icon.ico" >> "%LOG%" 2>&1
-echo  [3/3] Creando accesos directos (Escritorio y menu Inicio)...
-echo === accesos directos === >> "%LOG%"
-powershell -NoProfile -Command "$w=New-Object -ComObject WScript.Shell; foreach($d in @([Environment]::GetFolderPath('Desktop'), [Environment]::GetFolderPath('Programs'))){ $s=$w.CreateShortcut((Join-Path $d 'CanacaLabArcadia.lnk')); $s.TargetPath='%DEST%\CanacaLabArcadia.exe'; $s.WorkingDirectory='%DEST%'; $s.IconLocation='%DEST%\icon.ico'; $s.Save(); Write-Output ('Acceso directo: ' + $d) }" >> "%LOG%" 2>&1
-echo OK_TODO_LISTO >> "%LOG%"
-echo.
-echo  Listo. Abriendo CanacaLabArcadia...
-start "" "%DEST%\CanacaLabArcadia.exe"
-timeout /t 4 >nul
-exit /b 0
+set "WORK=%TEMP%\CanacaLabArcadia-instalador"
+echo  [1/2] Uniendo y descomprimiendo (1 o 2 minutos)...
+powershell -NoProfile -Command "$ErrorActionPreference='Stop'; $parts = @(Get-ChildItem -LiteralPath '%~dp0.' -Filter 'CanacaLabArcadia-*-win-x64.zip.0*' | Sort-Object Name); if(-not $parts.Count){ throw 'No encuentro las partes CanacaLabArcadia-...zip.001, .002, .003 junto a este archivo.' }; $work = $env:WORK; if(Test-Path $work){ Remove-Item $work -Recurse -Force }; New-Item -ItemType Directory $work | Out-Null; $zip = Join-Path $work 'instalador.zip'; $out = [IO.File]::Create($zip); foreach($p in $parts){ $in = [IO.File]::OpenRead($p.FullName); $in.CopyTo($out); $in.Close() }; $out.Close(); $ok = $false; try { tar -xf $zip -C $work; $ok = ($LASTEXITCODE -eq 0) } catch { }; if(-not $ok){ Expand-Archive -LiteralPath $zip -DestinationPath $work -Force }; Remove-Item $zip"
+if errorlevel 1 goto :fail
+if not exist "%WORK%\CanacaLabArcadia\INSTALAR.bat" goto :fail
+echo  [2/2] Instalando...
+call "%WORK%\CanacaLabArcadia\INSTALAR.bat"
+exit /b %errorlevel%
 
 :fail
-echo FALLO >> "%LOG%"
 echo.
-echo  Hubo un error. Los detalles quedaron en instalacion.log
+echo  No se pudo preparar el instalador. Revisa que esten las 3 partes completas
+echo  (CanacaLabArcadia-...-win-x64.zip.001, .002 y .003) en esta misma carpeta.
 pause
 exit /b 1
