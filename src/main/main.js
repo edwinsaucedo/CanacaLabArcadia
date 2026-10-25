@@ -1,5 +1,7 @@
 'use strict';
 // Proceso principal de CanacaLabArcadia (Electron).
+// Primero: que una consola cerrada (ventana del instalador) no rompa nada con "EBADF: bad file descriptor, write".
+require('./stdio').guardStdio();
 const { app, BrowserWindow, ipcMain, dialog, shell, protocol, net, screen } = require('electron');
 const path = require('path');
 const fs = require('fs');
@@ -571,6 +573,8 @@ function handle(channel, fn) {
     try {
       return { ok: true, data: await fn(...args) };
     } catch (e) {
+      // Los errores inesperados quedan en logs\canacalab.log con su detalle, para poder corregirlos.
+      if (!['NO_BIOS', 'CANCELLED', 'NO_ACCOUNT'].includes(e.code)) appLog(`Error en ${channel}: ${e.stack || e.message}`);
       return { ok: false, error: e.message, code: e.code || null };
     }
   });

@@ -1,4 +1,4 @@
-CANACALAB ARCADIA 1.11.0 para Windows (ROG Ally / PC x64)
+CANACALAB ARCADIA 1.11.1 para Windows (ROG Ally / PC x64)
 
 INSTALAR
   1. Descomprime todo este .zip (clic derecho > Extraer todo).

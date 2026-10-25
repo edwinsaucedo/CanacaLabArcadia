@@ -6,7 +6,7 @@ set "LOG=%~dp0instalacion.log"
 set "DEST=C:\CanacaLabArcadia\app"
 echo [%date% %time%] Inicio > "%LOG%"
 echo.
-echo  CANACALAB ARCADIA 1.11.0 - Instalar
+echo  CANACALAB ARCADIA 1.11.1 - Instalar
 echo  -----------------------------------
 echo  No necesita internet ni Node.js. Tarda menos de un minuto.
 echo.
@@ -29,6 +29,8 @@ powershell -NoProfile -Command "$w=New-Object -ComObject WScript.Shell; foreach(
 echo OK_TODO_LISTO >> "%LOG%"
 echo.
 echo  Listo. Abriendo CanacaLabArcadia...
+rem Sin engancharse a esta ventana: al cerrarse no debe afectar a CanacaLabArcadia.
+set "ELECTRON_NO_ATTACH_CONSOLE=1"
 start "" /D "%DEST%" "%DEST%\CanacaLabArcadia.exe"
 timeout /t 4 >nul
 exit /b 0

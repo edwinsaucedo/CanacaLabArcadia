@@ -267,6 +267,7 @@ Para agregar una consola nueva copia un bloque de `systems.json`, cambia el `id`
 - **Neo Geo: "one of your romsets is missing files... neogeo"**: falta `neogeo.zip` o es de una versión vieja. CanacaLabArcadia ahora lo revisa antes de abrir el juego y te dice qué le falta. Necesitas un `neogeo.zip` del set de FBNeo: debe traer `sp-s3.sp1`, `sm1.sm1`, `sfix.sfix` y `000-lo.lo` (se comparan por CRC, en `config\systems.json` > neogeo > bios).
 - **Conecté un control de Xbox y en el juego no hace nada**: abre el juego presionando A con ese control y será el jugador 1. Si RetroArch muestra "No se ha configurado...", el detalle de qué controles detectó queda en `C:\CanacaLabArcadia\logs\retroarch.log`. Para volver al driver anterior, pon `"retroarchJoypadDriver": "xinput"` en `%APPDATA%\CanacaLabArcadia\settings.json`.
 - **PS2 abre pero el control no responde**: si cambiaste los botones de PCSX2 a mano, CanacaLabArcadia no los toca; en PCSX2 > Ajustes > Controladores > Puerto 1 usa "Mapeo automático".
+- **Salen avisos "EBADF: bad file descriptor, write"** (versiones 1.11.0 o anteriores): CanacaLabArcadia se abrió desde la ventana negra del instalador y esa ventana ya se cerró. Ciérrala (Menú > Salir) y ábrela desde el acceso directo del Escritorio. Desde la 1.11.1 ya no pasa.
 - **El emulador se queda colgado**: mantén View + Menú 1 segundo; si no responde en 3 s, CanacaLabArcadia lo cierra a la fuerza.
 
 ## 10. Legal

@@ -1,7 +1,7 @@
 {
   "name": "canacalab-arcadia",
   "productName": "CanacaLabArcadia",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "description": "Frontend multi-consola para ROG Ally X: todas tus consolas en una sola interfaz, navegable con control y lista para streaming.",
   "main": "src/main/main.js",
   "author": "Karen Vazquez",

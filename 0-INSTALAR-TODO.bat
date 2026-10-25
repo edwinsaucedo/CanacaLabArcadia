@@ -43,7 +43,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "$w=New-Object -ComObject
 echo OK_TODO_LISTO >> "%LOG%"
 echo.
 echo  Listo. Abriendo CanacaLabArcadia...
-start "" "%DEST%\CanacaLabArcadia.exe"
+rem Sin engancharse a esta ventana: al cerrarse no debe afectar a CanacaLabArcadia.
+set "ELECTRON_NO_ATTACH_CONSOLE=1"
+start "" /D "%DEST%" "%DEST%\CanacaLabArcadia.exe"
 timeout /t 4 >nul
 exit /b 0
 
