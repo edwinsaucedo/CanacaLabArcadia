@@ -158,6 +158,8 @@ function sevenZipPath() {
 
 function extractArchive(archive, destDir) {
   fs.mkdirSync(destDir, { recursive: true });
+  // 7za no abre .rar: se usa el descompresor oficial de RAR (unrar en WebAssembly) y, si falla, el tar de Windows.
+  if (/\.rar$/i.test(archive)) return extractRar(archive, destDir);
   return new Promise((resolve, reject) => {
     const p = spawn(sevenZipPath(), ['x', '-y', `-o${destDir}`, archive], { windowsHide: true });
     let err = '';
@@ -165,6 +167,30 @@ function extractArchive(archive, destDir) {
     p.on('error', reject);
     p.on('close', (code) => (code === 0 ? resolve(destDir) : reject(new Error(`No se pudo descomprimir (${code}): ${err.slice(0, 300)}`))));
   });
+}
+
+async function extractRar(archive, destDir) {
+  let first = null;
+  try {
+    const { createExtractorFromFile } = require('node-unrar-js');
+    const extractor = await createExtractorFromFile({ filepath: archive, targetPath: destDir });
+    const { files } = extractor.extract();
+    for (const f of files) void f; // el iterador es perezoso: recorrerlo es lo que escribe los archivos
+    return destDir;
+  } catch (e) {
+    first = e;
+  }
+  const tar = process.platform === 'win32' ? path.join(process.env.SystemRoot || 'C:\\Windows', 'System32', 'tar.exe') : null;
+  if (tar && fs.existsSync(tar)) {
+    const ok = await new Promise((resolve) => {
+      const p = spawn(tar, ['-xf', archive, '-C', destDir], { windowsHide: true });
+      p.on('error', () => resolve(false));
+      p.on('close', (code) => resolve(code === 0));
+    });
+    if (ok) return destDir;
+  }
+  const why = first && first.message ? ` (${first.message})` : '';
+  throw new Error(`No se pudo descomprimir ${path.basename(archive)}${why}. Si tiene contraseña o viene en varias partes, súbelo a Drive como .zip o .7z.`);
 }
 
 function pickAsset(assets, pattern, fallback) {

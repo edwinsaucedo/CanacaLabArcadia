@@ -1,7 +1,7 @@
 INSTALADOR DE CANACALAB ARCADIA PARA WINDOWS
 
 GitHub no acepta archivos de mas de 100 MB, por eso el instalador viene en 3 partes:
-  CanacaLabArcadia-1.10.0-win-x64.zip.001, .002 y .003
+  CanacaLabArcadia-1.10.1-win-x64.zip.001, .002 y .003
 
 Opcion facil:
   1. En GitHub: boton verde "Code" > "Download ZIP" y descomprimelo.

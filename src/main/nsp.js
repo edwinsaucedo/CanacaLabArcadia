@@ -73,8 +73,10 @@ function titleIdFromNsp(file) {
 // Cuando no hay title ID: pistas en el nombre.
 function kindFromWords(name) {
   const n = String(name || '');
-  if (/\[(dlc|aoc)\]|\bdlc\b|add-?on content/i.test(n)) return 'dlc';
-  if (/\[(upd|update)\]|\bupdate\b|\bactualizaci[oó]n\b/i.test(n)) return 'update';
+  // "DLC", "DLCs", "99 DLCs", "[AOC]", "Add-On Content", "contenido descargable"
+  if (/\[(dlcs?|aoc)\]|\bdlcs?\b|\baoc\b|add-?ons?\b|contenido descargable/i.test(n)) return 'dlc';
+  // "Update", "Updates", "[UPD]", "Actualización", "Parche"
+  if (/\[(upd|update)\]|\bupd\b|\bupdates?\b|\bactualizaci[oó]n(es)?\b|\bparches?\b/i.test(n)) return 'update';
   const v = n.match(/\[v(\d+)\]/i);
   if (v && Number(v[1]) > 0) return 'update';
   return null;
@@ -107,19 +109,21 @@ function attachSwitchExtras(units) {
   const bases = [];
   const extras = [];
   for (const u of units) {
-    if (u.kind !== 'files') { bases.push({ ...u, extras: [] }); continue; }
+    if (u.kind !== 'files') {
+      // Una carpeta "Juego DLC" o "Juego Update" tambien es un extra, no un juego.
+      const kind = kindFromWords(u.name);
+      if (kind) extras.push({ ...u, kind, titleId: null, baseId: null });
+      else bases.push({ ...u, extras: [] });
+      continue;
+    }
     const c = classifySwitchFile(u.name, { readHeader: false });
     if (c.kind === 'base') bases.push({ ...u, titleId: c.titleId, extras: [] });
     else extras.push({ ...u, ...c });
   }
-  const norm = (s) => s.toLowerCase().replace(/\[[^\]]*\]|\([^)]*\)/g, ' ').replace(/\.(nsp|xci|nsz|xcz)$/i, '').replace(/\b(update|upd|dlc)\b/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim();
   for (const x of extras) {
     let base = x.baseId && bases.find((b) => b.titleId === x.baseId);
-    // Sin title ID: por nombre ("Juego [UPD].nsp" va con "Juego.nsp").
-    if (!base) {
-      const n = norm(x.name);
-      base = n && bases.find((b) => b.kind === 'files' && norm(b.name) === n);
-    }
+    // Sin title ID: por nombre. "Juego Update v13.0.2.7z" y "Juego 99 DLCs.rar" van con "Juego (World) (Base Game).7z".
+    if (!base) base = baseByName(x.name, bases);
     if (base) {
       base.extras.push({ name: x.name, kind: x.kind, files: x.files, size: x.size });
     }
@@ -127,4 +131,28 @@ function attachSwitchExtras(units) {
   return bases;
 }
 
-module.exports = { titleIdFromName, kindOfTitleId, baseTitleId, readPfs0Names, titleIdFromNsp, classifySwitchFile, attachSwitchExtras, kindFromWords };
+// Nombre sin region, version, etiquetas ni extension, para comparar juegos con sus updates y DLC.
+function plainName(s) {
+  return String(s || '').toLowerCase()
+    .replace(/\.(nsp|xci|nsz|xcz|zip|7z|rar)$/i, '')
+    .replace(/\[[^\]]*\]|\([^)]*\)/g, ' ')
+    .replace(/\bv\d+(\.\d+)*\b/g, ' ')
+    .replace(/\b(dlcs?|aoc|add-?ons?|updates?|upd|actualizaci[oó]n(es)?|parches?|base game|juego base)\b/g, ' ')
+    .replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+// El juego base cuyo nombre es el principio del nombre del extra (el mas largo gana: "Mario Kart 8 Deluxe" antes que "Mario Kart 8").
+function baseByName(extraName, bases) {
+  const n = plainName(extraName);
+  if (!n) return null;
+  let best = null;
+  let bestLen = 0;
+  for (const b of bases) {
+    const bn = plainName(b.name);
+    if (!bn || bn.length <= bestLen) continue;
+    if (n === bn || n.startsWith(`${bn} `)) { best = b; bestLen = bn.length; }
+  }
+  return best;
+}
+
+module.exports = { titleIdFromName, kindOfTitleId, baseTitleId, readPfs0Names, titleIdFromNsp, classifySwitchFile, attachSwitchExtras, kindFromWords, plainName, baseByName };

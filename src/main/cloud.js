@@ -13,7 +13,7 @@ const { titleFor, findCover, withoutCopyPrefix } = require('./scanner');
 
 const DEFAULT_FILE = path.join(__dirname, '..', '..', 'config', 'nube.default.json');
 const COMPANION_EXT = new Set(['.bin', '.img', '.sub', '.cue', '.ccd', '.m3u', '.dkey', '.iso']);
-const ARCHIVE_EXT = new Set(['.zip', '.7z']);
+const ARCHIVE_EXT = new Set(['.zip', '.7z', '.rar']);
 const IGNORE_EXT = new Set(['.txt', '.nfo', '.jpg', '.jpeg', '.png', '.url', '.lnk', '.ini', '.md', '.pdf', '.docx', '.xlsx', '.gdoc']);
 
 // ---------------------------------------------------------------- configuracion
@@ -293,7 +293,9 @@ function unitRawName(unit, system) {
 // Los updates y DLC de Switch que aun no estan en la carpeta de la consola.
 function missingExtras(dataRoot, unit) {
   const dest = destFor(dataRoot, 'switch');
-  return (unit.extras || []).flatMap((x) => x.files).filter((rel) => !fs.existsSync(path.join(dest, path.basename(rel))));
+  // Un .7z/.rar que ya se bajo y se descomprimio deja su marca en .descargados (el comprimido se borra).
+  return (unit.extras || []).flatMap((x) => x.files).filter((rel) => !fs.existsSync(path.join(dest, path.basename(rel)))
+    && !fs.existsSync(path.join(dest, '.descargados', `${path.basename(rel)}.ok`)));
 }
 
 // ---------------------------------------------------------------- servicio

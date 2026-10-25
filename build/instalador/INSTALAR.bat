@@ -6,7 +6,7 @@ set "LOG=%~dp0instalacion.log"
 set "DEST=C:\CanacaLabArcadia\app"
 echo [%date% %time%] Inicio > "%LOG%"
 echo.
-echo  CANACALAB ARCADIA 1.10.0 - Instalar
+echo  CANACALAB ARCADIA 1.10.1 - Instalar
 echo  -----------------------------------
 echo  No necesita internet ni Node.js. Tarda menos de un minuto.
 echo.

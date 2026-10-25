@@ -1,7 +1,7 @@
 {
   "name": "canacalab-arcadia",
   "productName": "CanacaLabArcadia",
-  "version": "1.10.0",
+  "version": "1.10.1",
   "description": "Frontend multi-consola para ROG Ally X: todas tus consolas en una sola interfaz, navegable con control y lista para streaming.",
   "main": "src/main/main.js",
   "author": "Karen Vazquez",
@@ -16,7 +16,8 @@
   },
   "dependencies": {
     "7zip-bin": "^5.2.0",
-    "koffi": "^2.9.0"
+    "koffi": "^2.9.0",
+    "node-unrar-js": "^2.0.2"
   },
   "devDependencies": {
     "electron": "^33.2.0",
@@ -37,7 +38,8 @@
     ],
     "asarUnpack": [
       "node_modules/7zip-bin/**/*",
-      "node_modules/koffi/**/*"
+      "node_modules/koffi/**/*",
+      "node_modules/node-unrar-js/**/*"
     ],
     "win": {
       "target": [

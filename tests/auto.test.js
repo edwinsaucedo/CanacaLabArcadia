@@ -281,6 +281,58 @@ test('nube: si llega un update nuevo a Drive de un juego que ya tienes, se baja 
   assert.equal(jobs[0].files.length, 1);
 });
 
+test('Switch: updates y DLC sin title ID en el nombre (comprimidos .7z/.rar, "99 DLCs") se unen al juego', () => {
+  const units = [
+    'Super Smash Bros. Ultimate (World) (Base Game).7z', 'Super Smash Bros Ultimate Update v13.0.2.7z', 'Super Smash Bros Ultimate 99 DLCs.rar',
+    'Mario Kart 8 Deluxe.nsp', 'Mario Kart 8.nsp', 'Mario Kart 8 Deluxe DLC.nsp', 'Mario Kart 8 DLC.nsp', 'Pokemon Violet (USA).xci'
+  ].map((name) => ({ key: name, name, kind: 'files', files: [name], size: 1 }));
+  units.push({ key: 'dir', name: 'Pokemon Violet DLC', kind: 'dir', files: ['Pokemon Violet DLC/dlc1.nsp'], size: 1 });
+  const out = nsp.attachSwitchExtras(units);
+  const by = Object.fromEntries(out.map((b) => [b.name, b.extras.map((x) => `${x.kind}:${x.name}`)]));
+  assert.deepEqual(Object.keys(by).sort(), ['Mario Kart 8 Deluxe.nsp', 'Mario Kart 8.nsp', 'Pokemon Violet (USA).xci', 'Super Smash Bros. Ultimate (World) (Base Game).7z']);
+  assert.deepEqual(by['Super Smash Bros. Ultimate (World) (Base Game).7z'], ['update:Super Smash Bros Ultimate Update v13.0.2.7z', 'dlc:Super Smash Bros Ultimate 99 DLCs.rar']);
+  assert.deepEqual(by['Mario Kart 8 Deluxe.nsp'], ['dlc:Mario Kart 8 Deluxe DLC.nsp'], 'el nombre mas largo gana');
+  assert.deepEqual(by['Mario Kart 8.nsp'], ['dlc:Mario Kart 8 DLC.nsp']);
+  assert.deepEqual(by['Pokemon Violet (USA).xci'], ['dlc:Pokemon Violet DLC'], 'una carpeta de DLC no es un juego');
+  assert.equal(nsp.kindFromWords('Juego 99 DLCs.rar'), 'dlc');
+  assert.equal(nsp.kindFromWords('Juego (Actualización 1.2).zip'), 'update');
+  assert.equal(nsp.kindFromWords('Super Smash Bros. Ultimate (World) (Base Game).7z'), null);
+});
+
+test('nube: Smash con su update .7z y sus DLC .rar se baja junto, se descomprime y no se vuelve a bajar', async () => {
+  const drive = h.tmpDir('drive-');
+  const sw = path.join(drive, FOLDER, 'Nintendo Switch');
+  fs.mkdirSync(sw, { recursive: true });
+  fs.writeFileSync(path.join(sw, 'Super Smash Bros. Ultimate (World) (Base Game).7z'), Buffer.alloc(64, 1));
+  fs.writeFileSync(path.join(sw, 'Super Smash Bros Ultimate Update v13.0.2.7z'), Buffer.alloc(32, 2));
+  fs.writeFileSync(path.join(sw, 'Super Smash Bros Ultimate 99 DLCs.rar'), h.buildRar({ 'Super Smash Bros Ultimate DLC [01006A800016F001].nsp': fakeNsp('01006A800016F001') }));
+  process.env.FAKE_DRIVE = drive;
+  const dataRoot = h.withCloudFolder(h.tmpDir('biblio-'));
+  const unpacked = [];
+  const cloud = new CloudService({
+    getDataRoot: () => dataRoot, getCatalog: () => catalog, getRcloneExe: () => fakeExe,
+    // .7z simulado (no es un 7z real); el .rar si se descomprime de verdad.
+    extract: (a, d) => { unpacked.push(path.basename(a)); return /\.rar$/i.test(a) ? emus.extractArchive(a, d) : Promise.resolve(d); }
+  });
+  await cloud.connectAccount({});
+  await cloud.buildIndex();
+  const games = cloud.cloudGames().switch;
+  assert.equal(games.length, 1, 'solo el juego, sin los DLC ni el update');
+  assert.equal(games[0].title, 'Super Smash Bros. Ultimate');
+  assert.equal(games[0].extras, 2);
+  const done = waitDone(cloud, 1);
+  cloud.playJob(games[0].id);
+  const [d] = await done;
+  assert.equal(d.ok, true);
+  assert.equal(d.files.length, 3, 'juego + update + DLC');
+  assert.deepEqual(unpacked.sort(), ['Super Smash Bros Ultimate 99 DLCs.rar', 'Super Smash Bros Ultimate Update v13.0.2.7z', 'Super Smash Bros. Ultimate (World) (Base Game).7z']);
+  const dest = path.join(dataRoot, 'roms', 'switch');
+  assert.ok(fs.existsSync(path.join(dest, 'Super Smash Bros Ultimate DLC [01006A800016F001].nsp')), 'el DLC sale del .rar');
+  assert.equal(fs.existsSync(path.join(dest, 'Super Smash Bros Ultimate 99 DLCs.rar')), false, 'el comprimido se borra');
+  assert.equal((cloud.cloudGames().switch || []).length, 0);
+  assert.equal(cloud.backgroundJobs().filter((j) => j.system === 'switch').length, 0, 'lo ya descomprimido no se vuelve a bajar');
+});
+
 test('PS3: enlace del firmware desde la lista oficial de Sony y descarga validada', async () => {
   const list = 'Dest=84;CompatibleSystemSoftwareVersion=4.9100-;\nDest=84;ImageVersion=0001000f;SystemSoftwareVersion=4.9200;CDN=http://dus01.ps3.update.playstation.net/update/ps3/image/us/2025_0101_abc/PS3UPDAT.PUP;CDN_Timeout=30;\n';
   assert.equal(fw.pupUrlFromList(list), 'http://dus01.ps3.update.playstation.net/update/ps3/image/us/2025_0101_abc/PS3UPDAT.PUP');

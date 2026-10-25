@@ -255,4 +255,42 @@ function withCloudFolder(dataRoot, folderId = TEST_FOLDER) {
   return dataRoot;
 }
 
-module.exports = { TEST_FOLDER, withCloudFolder, fakePs2Bios, tmpDir, buildIso9660, toRawMode2, toCso, buildSfo, buildPbp, buildZip, nintendoDisc, rvz, xboxImage, writeXboxImage };
+// RAR 4 sin compresion (metodo "store"): suficiente para probar la descompresion de .rar.
+function buildRar(files) {
+  const crc = (b) => zlib.crc32(b) >>> 0;
+  const head = (body) => {
+    const out = Buffer.alloc(2 + body.length);
+    out.writeUInt16LE(crc(body) & 0xffff, 0);
+    body.copy(out, 2);
+    return out;
+  };
+  const parts = [Buffer.from([0x52, 0x61, 0x72, 0x21, 0x1a, 0x07, 0x00])];
+  const main = Buffer.alloc(11);
+  main.writeUInt8(0x73, 0); main.writeUInt16LE(0, 1); main.writeUInt16LE(13, 3);
+  parts.push(head(main));
+  for (const [name, content] of Object.entries(files)) {
+    const data = Buffer.isBuffer(content) ? content : Buffer.from(content);
+    const fname = Buffer.from(name.replace(/\//g, '\\'), 'latin1');
+    const h = Buffer.alloc(30 + fname.length);
+    h.writeUInt8(0x74, 0); // archivo
+    h.writeUInt16LE(0x8000, 1); // con datos despues del encabezado
+    h.writeUInt16LE(32 + fname.length, 3);
+    h.writeUInt32LE(data.length, 5); // empacado
+    h.writeUInt32LE(data.length, 9); // original
+    h.writeUInt8(2, 13); // Windows
+    h.writeUInt32LE(crc(data), 14);
+    h.writeUInt32LE(0x5b2c0000, 18); // fecha DOS
+    h.writeUInt8(20, 22); // version 2.0
+    h.writeUInt8(0x30, 23); // store
+    h.writeUInt16LE(fname.length, 24);
+    h.writeUInt32LE(0x20, 26); // atributo "archivo"
+    fname.copy(h, 30);
+    parts.push(head(h), data);
+  }
+  const end = Buffer.alloc(5);
+  end.writeUInt8(0x7b, 0); end.writeUInt16LE(0x4000, 1); end.writeUInt16LE(7, 3);
+  parts.push(head(end));
+  return Buffer.concat(parts);
+}
+
+module.exports = { buildRar, TEST_FOLDER, withCloudFolder, fakePs2Bios, tmpDir, buildIso9660, toRawMode2, toCso, buildSfo, buildPbp, buildZip, nintendoDisc, rvz, xboxImage, writeXboxImage };
